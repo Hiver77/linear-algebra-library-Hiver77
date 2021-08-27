@@ -26,7 +26,7 @@ class Vector:
 
     @classmethod
     def make_unitary(cls, components: t.Iterable[t.Union[int, float]]):
-        """Make a unitary vetor out of the components. """
+        """Make a unitary vetor out of the components.  """
         return build_unit_vector(cls(components))
 
     def __init__(self, components: t.Iterable[t.Union[int, float]]):
