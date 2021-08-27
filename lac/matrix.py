@@ -72,13 +72,13 @@ class Matrix:
     @property
     def num_columns(self) -> int:
         ## homework:start
-        return self.shape[1]
+        return len(self[0])
         ## homework:end
 
     @property
     def num_rows(self) -> int:
         ## homework:start
-        return self.shape[0]
+        return len(self.rowvectors)
         ## homework:end
 
     @property
@@ -89,8 +89,7 @@ class Matrix:
     def T(self) -> Matrix:
         if not hasattr(self, "_T"):
             ## homework:start
-            self._T = 2
-            ## homework:end
+           self._T=Matrix(self.columnvectors)
         return self._T
 
     @property
@@ -312,7 +311,14 @@ def matrix_multiply(m1: Matrix, m2: Matrix) -> Matrix:
         )
         raise ValueError(msg.format(m1.num_columns, m2.num_rows))
     ## homework:start
-    output_matrix = 4
+    R_List = []
+    m2T = m2.T
+    for i in range(m1.num_rows):
+        R = []
+        for j in range(m2T.num_rows):
+            R.append(vector_ops.dot(m1[i],m2.T[j]))
+        R_List.append(R)
+    output_matrix = Matrix(R_List)
     ## homework:end
     return output_matrix
 
