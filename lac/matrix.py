@@ -377,28 +377,3 @@ def eigenvalues(mat: Matrix) -> t.List[t.Union[int, float]]:
 
 def eigenvectors(mat: Matrix) -> t.List[Vector]:
     raise NotImplementedError
-
-
-def mat(n): for i in range(n): matriz.append([]) for j in range(n): matriz[i].append(0) return matriz
-
-def llenar(n): matriz = mat(n) for x in range(n): for y in range(n): matriz[x][y] = float(input('Valor de [' + str(x) + '][' + str(y) + '] = ')) print() # Fin entrada de datos # Muestra entrada datos print('Matriz : ') for i in range(n): print(matriz[i][:])
-
-def gauss(n): inv = 0 # Conteo de cambios 
-for z in range(n - 1): for x in range(1, n - z): 
-    # Aqui cambio de filas cuando ceros en diagonal 
-    # q = z 
-    # while matriz[q][z] == 0 and q < n - 1: 
-    # temp = matriz[q][:] 
-    # matriz[q][:] = matriz[q + 1][:] 
-    # matriz[q + 1][:] = temp inv += 1 q += 1 
-    # # Aqui metodo de gauss 
-    # if (matriz[z][z] != 0): 
-    # p = matriz[x + z][z] / matriz[z][z] 
-    # for y in range(n): 
-    # matriz[x + z][y] = matriz[x + z][y] - (matriz[z][y] * p) 
-    # # Muestra matriz de Gauss (Upper) print('Matriz por Gauss : ') 
-    # for i in range(n): print(matriz[i][:])
-    #  # Calculo determinante deter = 1 
-    # for x in range(n): 
-    # deter = matriz[x][x] * deter 
-    # print('\nEl determinante de la matriz es = ', deter * (-1) ** inv)
