@@ -10,7 +10,6 @@ from collections.abc import Iterable
 
 from lac import PRECISION
 
-
 class Vector:
     typecode = "d"
 

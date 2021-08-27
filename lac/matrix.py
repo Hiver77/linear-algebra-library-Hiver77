@@ -4,6 +4,7 @@ import copy
 import typing as t
 from array import array
 from collections.abc import Iterable
+import numpy as np
 
 import lac.vector as vector_ops
 from lac import Vector, PRECISION
@@ -72,13 +73,13 @@ class Matrix:
     @property
     def num_columns(self) -> int:
         ## homework:start
-        return self.shape[1]
+        return len(self[0])
         ## homework:end
 
     @property
     def num_rows(self) -> int:
         ## homework:start
-        return self.shape[0]
+        return len(self.rowvectors)
         ## homework:end
 
     @property
@@ -89,15 +90,14 @@ class Matrix:
     def T(self) -> Matrix:
         if not hasattr(self, "_T"):
             ## homework:start
-            self._T = 2
-            ## homework:end
+           self._T=Matrix(self.columnvectors)
         return self._T
 
     @property
     def determinant(self) -> float:
         if not hasattr(self, "_det"):
             ## homework:start
-            self._det = 2
+            self._det = 4
             ## homework:end
         return self._det
 
@@ -130,12 +130,12 @@ class Matrix:
 
     def __matmul__(self, other: Matrix) -> Matrix:
         ## homework:start
-        return 
+        return matrix_multiply(self,other)
         ## homework:end
 
     def __add__(self, other: Matrix) -> Matrix:
         ## homework:start
-        return
+        return add(self,other)
         ## homework:end
 
     def __rmul__(self, k: t.Union[int, float]) -> Matrix:
@@ -145,12 +145,12 @@ class Matrix:
 
     def __neg__(self) -> Matrix:
         ## homework:start
-        return
+        return scale(self,-1)
         ## homework:end
 
     def __sub__(self, other: Matrix) -> Matrix:
         ## homework:start
-        return
+        return subtract(self,other)
         ## homework:end
 
     def __iter__(self):
@@ -257,7 +257,13 @@ def _make_identity_rowvectors(num_rows, num_columns):
 def scale(m: Matrix, k: t.Union[int, float]) -> Matrix:
     """Scale matrix m by k. """
     ## homework:start
-    output_matrix = 4
+    R_List = []
+    for i in range(m.num_rows):
+        R = []
+        for j in range(m.num_columns):
+            R.append(m[i][j]*k)
+        R_List.append(R)
+    output_matrix = Matrix(R_List)
     ## homework:end
     return output_matrix
 
@@ -265,15 +271,31 @@ def scale(m: Matrix, k: t.Union[int, float]) -> Matrix:
 def add(m1: Matrix, m2: Matrix) -> Matrix:
     """Adds two matrices. """
     ## homework:start
-    output_matrix = 3
+    R=[]
+    if m1.num_columns==m2.num_columns and m1.num_rows==m2.num_rows:
+        for i in range(m1.num_rows):
+            R.append([])
+            for j in range(m1.num_columns):
+               R[i].append(m1[i,j]+m2[i,j])
+                
+            
+    output_matrix = Matrix(R)
     ## homework:end
     return output_matrix
 
-
+    
 def subtract(m1: Matrix, m2: Matrix) -> Matrix:
     """Substracts the second matrix from the first one. """
     ## homework:start
-    output_matrix = 4
+    R=[]
+    if m1.num_columns==m2.num_columns and m1.num_rows==m2.num_rows:
+        for i in range(m1.num_rows):
+            R.append([])
+            for j in range(m1.num_columns):
+               R[i].append(m1[i,j]-m2[i,j])
+                
+            
+    output_matrix = Matrix(R)
     ## homework:end
     return output_matrix
 
@@ -286,7 +308,11 @@ def vector_multiply(m: Matrix, v: Vector, from_left: bool = False) -> Vector:
         raise ValueError(f"Shape mismatch: m({m.shape}), v({v.dim})")
 
     ## homework:start
-    output_vector = 3
+
+    R = []
+    for i in range(m.num_rows):
+        R.append(vector_ops.dot(m[i],v))
+    output_vector = Vector(R)
     ## homework:end
     return output_vector
 
@@ -312,7 +338,14 @@ def matrix_multiply(m1: Matrix, m2: Matrix) -> Matrix:
         )
         raise ValueError(msg.format(m1.num_columns, m2.num_rows))
     ## homework:start
-    output_matrix = 4
+    R_List = []
+    m2T = m2.T
+    for i in range(m1.num_rows):
+        R = []
+        for j in range(m2T.num_rows):
+            R.append(vector_ops.dot(m1[i],m2.T[j]))
+        R_List.append(R)
+    output_matrix = Matrix(R_List)
     ## homework:end
     return output_matrix
 
@@ -344,3 +377,28 @@ def eigenvalues(mat: Matrix) -> t.List[t.Union[int, float]]:
 
 def eigenvectors(mat: Matrix) -> t.List[Vector]:
     raise NotImplementedError
+
+
+def mat(n): for i in range(n): matriz.append([]) for j in range(n): matriz[i].append(0) return matriz
+
+def llenar(n): matriz = mat(n) for x in range(n): for y in range(n): matriz[x][y] = float(input('Valor de [' + str(x) + '][' + str(y) + '] = ')) print() # Fin entrada de datos # Muestra entrada datos print('Matriz : ') for i in range(n): print(matriz[i][:])
+
+def gauss(n): inv = 0 # Conteo de cambios 
+for z in range(n - 1): for x in range(1, n - z): 
+    # Aqui cambio de filas cuando ceros en diagonal 
+    # q = z 
+    # while matriz[q][z] == 0 and q < n - 1: 
+    # temp = matriz[q][:] 
+    # matriz[q][:] = matriz[q + 1][:] 
+    # matriz[q + 1][:] = temp inv += 1 q += 1 
+    # # Aqui metodo de gauss 
+    # if (matriz[z][z] != 0): 
+    # p = matriz[x + z][z] / matriz[z][z] 
+    # for y in range(n): 
+    # matriz[x + z][y] = matriz[x + z][y] - (matriz[z][y] * p) 
+    # # Muestra matriz de Gauss (Upper) print('Matriz por Gauss : ') 
+    # for i in range(n): print(matriz[i][:])
+    #  # Calculo determinante deter = 1 
+    # for x in range(n): 
+    # deter = matriz[x][x] * deter 
+    # print('\nEl determinante de la matriz es = ', deter * (-1) ** inv)
