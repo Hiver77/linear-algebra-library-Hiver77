@@ -215,11 +215,11 @@ def cross(v1: Vector, v2: Vector) -> Vector:
             raise ValueError(msg.format(v.dim))
 
     ## homework:start
-    w=[None,None,None]
-    w[0] = v1[1]*v2[2]-v1[2]*v2[1]
-    w[1] = v1[2]*v2[0]-v1[0]*v2[2]
-    w[2] = v1[0]*v2[1]-v1[1]*v2[0]
-    output_vector = Vector(w)
+    
+    w0 = v1[1]*v2[2]-v1[2]*v2[1]
+    w1 = v1[2]*v2[0]-v1[0]*v2[2]
+    w2 = v1[0]*v2[1]-v1[1]*v2[0]
+    output_vector = Vector([w0,w1,w2])
     ## homework:end
     return output_vector
 
